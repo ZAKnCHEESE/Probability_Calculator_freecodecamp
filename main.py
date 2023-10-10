@@ -53,26 +53,35 @@ def experiment(hat,expected_balls,num_balls_drawn,num_experiments):
             balls.append(key)
 
     
-    print(balls,1)
+    #print(balls,1)
 
     for experience in range(num_experiments):
         balls_drawn = hat.draw(num_balls_drawn)
-        balls.append(balls_drawn)
-        print(balls_drawn,3)
-
-        if (all(ball in balls_drawn for ball in balls)):
-            
-            print(5)
-
+        hat.contents.extend(balls_drawn)
+        
+        #print(balls_drawn)
+        i = 0
+        while i < len(balls):
+            if balls_drawn.count(balls[i]) >= balls.count(balls[i]):
+                i += 1
+                if i == len(balls):
+                    n+= 1
+                    print(n)
+            else:
+                i = len(balls)
+    
+    return n / num_experiments
 
 
 hat = Hat(black=6, red=4, green=3)
 probability = experiment(hat=hat,
-                  expected_balls={"red":1,"green":1},
+                  expected_balls={"red":2,"green":1},
                   num_balls_drawn=5,
-                  num_experiments=3)
+                  num_experiments=2)
+
+
+print(probability)
 
 
 
-if (all(ball in ["red","red","black","green"] for ball in ["red","red","green"])):
-    print(4)
+
